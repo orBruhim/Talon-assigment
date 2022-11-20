@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #222b36;
+  margin: 0;
+  z-index: 0;
+}
+
+.mat-form-field-label,
+.mat-select-value,
+.mat-select-arrow {
+  color: #919eab;
+}
+.mat-form-field.mat-focused .mat-form-field-label,
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: #919eab;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(255, 255, 255, 0.23);
+}
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: rgba(255, 255, 255, 0.23);
+}
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: transparent;
+}

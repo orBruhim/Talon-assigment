@@ -19,7 +19,10 @@
           "apps/talon-assigment/src/favicon.ico",
           "apps/talon-assigment/src/assets"
         ],
-        "styles": ["apps/talon-assigment/src/styles.scss"],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+          "apps/talon-assigment/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
