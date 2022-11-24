@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dashboardFacade.loadEventsData().subscribe();
+    this.dashboardFacade.loadEventData().subscribe();
   }
 
   applyFilter(event: Event) {

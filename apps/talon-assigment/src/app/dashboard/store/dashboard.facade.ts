@@ -13,15 +13,9 @@ export class DashboardFacade {
     private dashboardStore: DashboardStore
   ) {}
 
-  loadEventsData(): Observable<TalonEvent[]> {
+  sortEventData() {
     return this.appService.getEventData().pipe(
       tap((eventData: TalonEvent[]) => {
-        this.dashboardStore.update((store) => {
-          return {
-            ...store,
-            eventData,
-          };
-        });
         eventData.sort((currEvent, nextEvent) => {
           if (currEvent.time > nextEvent.time) {
             return 1;
@@ -32,6 +26,19 @@ export class DashboardFacade {
           }
 
           return 0;
+        });
+      })
+    );
+  }
+
+  loadEventData(): Observable<TalonEvent[]> {
+    return this.sortEventData().pipe(
+      tap((eventData: TalonEvent[]) => {
+        this.dashboardStore.update((store) => {
+          return {
+            ...store,
+            eventData,
+          };
         });
       })
     );
