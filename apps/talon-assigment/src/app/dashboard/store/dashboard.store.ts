@@ -9,18 +9,7 @@ export interface DashboardState {
 
 export function createInitialState(): DashboardState {
   return {
-    eventData: [
-      {
-        user: {
-          name: '',
-          email: '',
-        },
-        os: '',
-        eventType: '',
-        severity: '',
-        time: '',
-      },
-    ],
+    eventData: [],
     isLoading: false,
   };
 }
