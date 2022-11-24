@@ -13,7 +13,7 @@ export class DashboardFacade {
     private dashboardStore: DashboardStore
   ) {}
 
-  sortEventData() {
+  sortEventData(): Observable<TalonEvent[]> {
     return this.appService.getEventData().pipe(
       tap((eventData: TalonEvent[]) => {
         eventData.sort((currEvent, nextEvent) => {
@@ -34,9 +34,9 @@ export class DashboardFacade {
   loadEventData(): Observable<TalonEvent[]> {
     return this.sortEventData().pipe(
       tap((eventData: TalonEvent[]) => {
-        this.dashboardStore.update((store) => {
+        this.dashboardStore.update((state) => {
           return {
-            ...store,
+            ...state,
             eventData,
           };
         });

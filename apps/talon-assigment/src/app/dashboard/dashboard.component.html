@@ -1,15 +1,13 @@
 <div class="header">
   Events Table
 
-  <mat-form-field appearance="standard">
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Ex. Mia"
-      #input
-    />
+  <mat-form-field appearance="fill">
+    <mat-select [formControl]="filteredValue" multiple>
+      <mat-option *ngFor="let eventType of eventsValues" [value]="eventType">
+        <talon-assigment-chip [filterValue]="eventType"></talon-assigment-chip>
+      </mat-option>
+    </mat-select>
   </mat-form-field>
-  <talon-assigment-chip></talon-assigment-chip>
 
   <div *ngIf="dataSource$ | async">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -51,13 +49,6 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">
-          No data matching the filter "{{ input.value }}"
-        </td>
-      </tr>
     </table>
 
     <mat-paginator

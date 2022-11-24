@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { tap } from 'rxjs';
 import { DashboardQuery } from './store/dashboard.query';
 import { DashboardFacade } from './store/dashboard.facade';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'talon-assigment-dashboard',
@@ -13,24 +14,34 @@ import { DashboardFacade } from './store/dashboard.facade';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+
+  @ViewChild(MatSort) sort: MatSort | null = null;
+
   displayedColumns: string[] = ['Event Type', 'severity', 'User', 'Date'];
 
   dataSource!: MatTableDataSource<TalonEvent>;
 
+  filteredValue = new FormControl('');
+
+  eventsValues: string[] = [];
+
   dataSource$ = this.dashboardQuery.selectedEventData$.pipe(
     tap((eventData: TalonEvent[]) => {
-      console.log(eventData);
       this.dataSource = new MatTableDataSource(eventData);
 
       this.dataSource!.paginator = this.paginator;
 
       this.dataSource!.sort = this.sort;
+
+      eventData.map((event) => {
+        if (this.eventsValues.includes(event.eventType)) {
+          return;
+        }
+        this.eventsValues.push(event.eventType);
+      });
     })
   );
-
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
-
-  @ViewChild(MatSort) sort: MatSort | null = null;
 
   constructor(
     private dashboardFacade: DashboardFacade,
@@ -39,14 +50,5 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardFacade.loadEventData().subscribe();
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource!.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource!.paginator) {
-      this.dataSource!.paginator.firstPage();
-    }
   }
 }
