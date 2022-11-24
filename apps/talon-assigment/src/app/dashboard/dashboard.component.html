@@ -11,7 +11,7 @@
   </mat-form-field>
   <talon-assigment-chip></talon-assigment-chip>
 
-  <div>
+  <div *ngIf="dataSource$ | async">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="Event Type">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Type</th>

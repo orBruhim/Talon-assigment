@@ -1,58 +1,44 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { AppService } from '../app.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TalonEvent } from '../app.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { tap } from 'rxjs';
 import { DashboardQuery } from './store/dashboard.query';
+import { DashboardFacade } from './store/dashboard.facade';
 
 @Component({
   selector: 'talon-assigment-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['Event Type', 'severity', 'User', 'Date'];
 
-  // dataSource$ = this.dashboardQuery.selectedEventData$;
-
   dataSource!: MatTableDataSource<TalonEvent>;
+
+  dataSource$ = this.dashboardQuery.selectedEventData$.pipe(
+    tap((eventData: TalonEvent[]) => {
+      console.log(eventData);
+      this.dataSource = new MatTableDataSource(eventData);
+
+      this.dataSource!.paginator = this.paginator;
+
+      this.dataSource!.sort = this.sort;
+    })
+  );
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   @ViewChild(MatSort) sort: MatSort | null = null;
 
   constructor(
-    private appService: AppService,
+    private dashboardFacade: DashboardFacade,
     private dashboardQuery: DashboardQuery
   ) {}
 
-  ngAfterViewInit(): void {
-    this.appService
-      .getEventData()
-      .pipe(
-        tap((eventData: TalonEvent[]) => {
-          eventData.sort((currEvent, nextEvent) => {
-            if (currEvent.time > nextEvent.time) {
-              return 1;
-            }
-
-            if (currEvent.time < nextEvent.time) {
-              return -1;
-            }
-
-            return 0;
-          });
-
-          this.dataSource = new MatTableDataSource(eventData);
-
-          this.dataSource!.paginator = this.paginator;
-
-          this.dataSource!.sort = this.sort;
-        })
-      )
-      .subscribe();
+  ngOnInit(): void {
+    this.dashboardFacade.loadEventsData().subscribe();
   }
 
   applyFilter(event: Event) {
