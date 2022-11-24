@@ -3,7 +3,10 @@
 
   <mat-form-field appearance="fill">
     <mat-select [formControl]="filteredValue" multiple>
-      <mat-option *ngFor="let eventType of eventsValues" [value]="eventType">
+      <mat-option
+        *ngFor="let eventType of eventsValues"
+        (click)="applyFilter(eventType)"
+      >
         <talon-assigment-chip [filterValue]="eventType"></talon-assigment-chip>
       </mat-option>
     </mat-select>

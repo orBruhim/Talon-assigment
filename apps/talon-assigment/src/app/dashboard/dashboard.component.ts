@@ -51,4 +51,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardFacade.loadEventData().subscribe();
   }
+
+  applyFilter(event: string) {
+    this.dataSource!.filter = event.trim().toLowerCase();
+
+    if (this.dataSource!.paginator) {
+      this.dataSource!.paginator.firstPage();
+    }
+  }
 }
