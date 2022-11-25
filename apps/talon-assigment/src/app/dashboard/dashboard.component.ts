@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
 
   dataSource!: MatTableDataSource<TalonEvent>;
 
-  filteredValue = new FormControl('');
+  filteredValues = new FormControl([]);
 
   eventsValues: string[] = [];
 
@@ -52,11 +52,11 @@ export class DashboardComponent implements OnInit {
     this.dashboardFacade.loadEventData().subscribe();
   }
 
-  applyFilter(event: string) {
-    this.dataSource!.filter = event.trim().toLowerCase();
-
-    if (this.dataSource!.paginator) {
-      this.dataSource!.paginator.firstPage();
-    }
+  applyFilter(event: any) {
+    // this.dataSource!.filter = event.trim().toLowerCase();
+    //
+    // if (this.dataSource!.paginator) {
+    //   this.dataSource!.paginator.firstPage();
+    // }
   }
 }

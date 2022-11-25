@@ -1,16 +1,30 @@
 <div class="header">
   Events Table
+  <div class="select-container">
+    <!--    <div class="label-wrapper">Events Type Filter</div>-->
 
-  <mat-form-field appearance="fill">
-    <mat-select [formControl]="filteredValue" multiple>
-      <mat-option
-        *ngFor="let eventType of eventsValues"
-        (click)="applyFilter(eventType)"
-      >
-        <talon-assigment-chip [filterValue]="eventType"></talon-assigment-chip>
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="filteredValues" multiple>
+        <mat-select-trigger>
+          <div class="chip-list">
+            <talon-assigment-chip
+              *ngFor="let type of filteredValues.value"
+              [filterValue]="type"
+            >
+            </talon-assigment-chip>
+          </div>
+        </mat-select-trigger>
+
+        <mat-option
+          *ngFor="let type of eventsValues"
+          [value]="type"
+          (click)="applyFilter(filteredValues)"
+        >
+          {{ type | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div *ngIf="dataSource$ | async">
     <table mat-table [dataSource]="dataSource" matSort>

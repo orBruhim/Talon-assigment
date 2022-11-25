@@ -10,6 +10,25 @@
   .header {
     padding-left: 16px;
     padding-top: 17px;
+
+    .select-container {
+      padding: 14px 0 13px;
+      width: 400px;
+      height: 61px;
+      position: relative;
+
+      .label-wrapper {
+        position: absolute;
+        background-color: #222b36;
+      }
+    }
+
+    .mat-select {
+      background-color: #222b36;
+    }
+    .mat-option {
+      background-color: #222b36;
+    }
   }
 
   .mat-table,
