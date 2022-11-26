@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { TalonEvent } from './app.model';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
@@ -14,5 +14,9 @@ export class AppService {
 
   getEventData(): Observable<TalonEvent[]> {
     return this.http.get<TalonEvent[]>(this.url);
+  }
+
+  getFilteredEventData(params: HttpParams): Observable<TalonEvent[]> {
+    return this.http.get<TalonEvent[]>(this.url, { params });
   }
 }

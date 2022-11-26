@@ -43,4 +43,13 @@ export class DashboardFacade {
       })
     );
   }
+
+  updateFilteredData(filteredData: TalonEvent[]): void {
+    this.dashboardStore.update((state) => {
+      return {
+        ...state,
+        eventData: filteredData,
+      };
+    });
+  }
 }

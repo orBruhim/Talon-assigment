@@ -7,6 +7,9 @@ import { tap } from 'rxjs';
 import { DashboardQuery } from './store/dashboard.query';
 import { DashboardFacade } from './store/dashboard.facade';
 import { FormControl } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { HttpParams } from '@angular/common/http';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'talon-assigment-dashboard',
@@ -18,11 +21,13 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort | null = null;
 
+  @ViewChild(MatSelect) select: MatSelect | null = null;
+
   displayedColumns: string[] = ['Event Type', 'severity', 'User', 'Date'];
 
   dataSource!: MatTableDataSource<TalonEvent>;
 
-  filteredValues = new FormControl([]);
+  eventsValuesControls = new FormControl([]);
 
   eventsValues: string[] = [];
 
@@ -45,18 +50,55 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardFacade: DashboardFacade,
-    private dashboardQuery: DashboardQuery
+    private dashboardQuery: DashboardQuery,
+    private appService: AppService
   ) {}
 
   ngOnInit(): void {
     this.dashboardFacade.loadEventData().subscribe();
   }
 
-  applyFilter(event: any) {
-    // this.dataSource!.filter = event.trim().toLowerCase();
+  applyFilter() {
+    // this.dataSource.filter = filter.trim().toLowerCase();
+    let filterData = new HttpParams();
+
+    this.eventsValuesControls?.value?.forEach((item) => {
+      filterData = filterData.append('eventType', item);
+    });
+    this.updateTableData(filterData);
+
+    if (this.dataSource!.paginator) {
+      this.dataSource!.paginator.firstPage();
+    }
+  }
+
+  //:TODO :1. filteredValues only delete selected filter
+  //: TODO: 2. select close while clicking on x
+
+  onFilterCancelled(type: string) {
+    this.dataSource.filter = '';
+
+    this.eventsValuesControls?.value?.filter((item) => item[0] === type);
+
+    // this.filteredValues.setValue(null);
+
+    // this.eventsValues.filter((item) => item === type);
     //
-    // if (this.dataSource!.paginator) {
-    //   this.dataSource!.paginator.firstPage();
-    // }
+    // this.select?.close();
+
+    if (this.dataSource!.paginator) {
+      this.dataSource!.paginator.firstPage();
+    }
+  }
+
+  private updateTableData(params: HttpParams): void {
+    this.appService
+      .getFilteredEventData(params)
+      .pipe(
+        tap((filteredData: TalonEvent[]) => {
+          this.dashboardFacade.updateFilteredData(filteredData);
+        })
+      )
+      .subscribe();
   }
 }

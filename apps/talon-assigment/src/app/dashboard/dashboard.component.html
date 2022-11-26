@@ -4,12 +4,13 @@
     <!--    <div class="label-wrapper">Events Type Filter</div>-->
 
     <mat-form-field appearance="outline">
-      <mat-select [formControl]="filteredValues" multiple>
-        <mat-select-trigger>
+      <mat-select [formControl]="eventsValuesControls" multiple>
+        <mat-select-trigger #matSelect>
           <div class="chip-list">
             <talon-assigment-chip
-              *ngFor="let type of filteredValues.value"
+              *ngFor="let type of eventsValuesControls.value"
               [filterValue]="type"
+              (filterCancelled)="onFilterCancelled(type)"
             >
             </talon-assigment-chip>
           </div>
@@ -18,7 +19,7 @@
         <mat-option
           *ngFor="let type of eventsValues"
           [value]="type"
-          (click)="applyFilter(filteredValues)"
+          (click)="applyFilter()"
         >
           {{ type | titlecase }}
         </mat-option>

@@ -21,6 +21,19 @@
         position: absolute;
         background-color: #222b36;
       }
+
+      mat-form-field {
+        width: 100%;
+        height: 100%;
+        align-content: center;
+        padding-bottom: 10px;
+      }
+
+      .chip-list {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+      }
     }
 
     .mat-select {
