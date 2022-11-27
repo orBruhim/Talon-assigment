@@ -10,7 +10,7 @@
             <talon-assigment-chip
               *ngFor="let type of eventsValuesControls.value"
               [filterValue]="type"
-              (filterCancelled)="onFilterCancelled(type)"
+              (filterCancelled)="onFilterCancelled($event, type)"
             >
             </talon-assigment-chip>
           </div>

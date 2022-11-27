@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
   }
 
   applyFilter() {
-    // this.dataSource.filter = filter.trim().toLowerCase();
     let filterData = new HttpParams();
 
     this.eventsValuesControls?.value?.forEach((item) => {
@@ -67,28 +66,34 @@ export class DashboardComponent implements OnInit {
     });
     this.updateTableData(filterData);
 
-    if (this.dataSource!.paginator) {
-      this.dataSource!.paginator.firstPage();
-    }
+    this.resetPaginator();
   }
 
   //:TODO :1. filteredValues only delete selected filter
-  //: TODO: 2. select close while clicking on x
 
-  onFilterCancelled(type: string) {
-    this.dataSource.filter = '';
+  onFilterCancelled(event: any, type: string) {
+    event.stopPropagation();
+
+    let filterData = new HttpParams();
+
+    this.eventsValuesControls?.value?.forEach((item) => {
+      if (item! == type) {
+        filterData = filterData.append('eventType', item);
+      }
+    });
+    console.log(filterData);
+
+    filterData = filterData.delete('eventType', type);
+
+    console.log(filterData);
+
+    this.updateTableData(filterData);
+
+    // this.dataSource.filter = '';
 
     this.eventsValuesControls?.value?.filter((item) => item[0] === type);
 
-    // this.filteredValues.setValue(null);
-
-    // this.eventsValues.filter((item) => item === type);
-    //
-    // this.select?.close();
-
-    if (this.dataSource!.paginator) {
-      this.dataSource!.paginator.firstPage();
-    }
+    this.resetPaginator();
   }
 
   private updateTableData(params: HttpParams): void {
@@ -100,5 +105,11 @@ export class DashboardComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  private resetPaginator(): void {
+    if (this.dataSource!.paginator) {
+      this.dataSource!.paginator.firstPage();
+    }
   }
 }
