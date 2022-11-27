@@ -59,52 +59,36 @@ export class DashboardComponent implements OnInit {
   }
 
   applyFilter() {
-    let filterData = new HttpParams();
-
-    this.eventsValuesControls?.value?.forEach((item) => {
-      filterData = filterData.append('eventType', item);
-    });
-    this.updateTableData(filterData);
-
-    this.resetPaginator();
+    this.updateTableData();
   }
-
-  //:TODO :1. filteredValues only delete selected filter
 
   onFilterCancelled(event: any, type: string) {
     event.stopPropagation();
 
-    let filterData = new HttpParams();
+    const value = this.eventsValuesControls?.value?.filter(
+      (item) => item !== type
+    );
+    this.eventsValuesControls.setValue(value!);
 
-    this.eventsValuesControls?.value?.forEach((item) => {
-      if (item! == type) {
-        filterData = filterData.append('eventType', item);
-      }
-    });
-    console.log(filterData);
-
-    filterData = filterData.delete('eventType', type);
-
-    console.log(filterData);
-
-    this.updateTableData(filterData);
-
-    // this.dataSource.filter = '';
-
-    this.eventsValuesControls?.value?.filter((item) => item[0] === type);
-
-    this.resetPaginator();
+    this.updateTableData();
   }
 
-  private updateTableData(params: HttpParams): void {
+  private updateTableData(): void {
+    let filterData = new HttpParams();
+    this.eventsValuesControls?.value?.forEach((item) => {
+      filterData = filterData.append('eventType', item);
+    });
+
     this.appService
-      .getFilteredEventData(params)
+      .getFilteredEventData(filterData)
       .pipe(
         tap((filteredData: TalonEvent[]) => {
           this.dashboardFacade.updateFilteredData(filteredData);
         })
       )
       .subscribe();
+
+    this.resetPaginator();
   }
 
   private resetPaginator(): void {
