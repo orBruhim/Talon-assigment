@@ -17,9 +17,9 @@
       height: 61px;
       position: relative;
 
-      .label-wrapper {
-        position: absolute;
-        background-color: #222b36;
+      mat-select{
+        padding-top: 6px;
+        padding-bottom: 6px;
       }
 
       mat-form-field {
@@ -44,6 +44,14 @@
     }
   }
 
+  .loader{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+
   .mat-table,
   .mat-paginator {
     background-color: transparent;
@@ -64,11 +72,17 @@
       justify-content: left;
       width: 25%;
       border-bottom: 1px solid #3d4752;
+      padding-left: 43px;
+      height: 76px;
     }
 
     th {
       text-align: left;
       border-bottom: 1px solid #3d4752;
+      padding-left: 43px;
+      height: 76px;
+
+
     }
 
     .empty {

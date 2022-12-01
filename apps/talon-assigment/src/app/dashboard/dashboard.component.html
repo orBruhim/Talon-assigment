@@ -1,11 +1,11 @@
 <div class="header">
   Events Table
   <div class="select-container">
-    <!--    <div class="label-wrapper">Events Type Filter</div>-->
 
     <mat-form-field appearance="outline">
+      <mat-label>Events Type Filter</mat-label>
       <mat-select [formControl]="eventsValuesControls" multiple>
-        <mat-select-trigger #matSelect>
+        <mat-select-trigger>
           <div class="chip-list">
             <talon-assigment-chip
               *ngFor="let type of eventsValuesControls.value"
@@ -25,6 +25,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+
+  <div class="loader" *ngIf="isLoading$ | async">
+    <mat-spinner></mat-spinner>
   </div>
 
   <div *ngIf="dataSource$ | async">

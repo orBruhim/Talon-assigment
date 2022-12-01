@@ -38,6 +38,7 @@ export class DashboardFacade {
           return {
             ...state,
             eventData,
+            isLoading: false
           };
         });
       })
@@ -51,5 +52,14 @@ export class DashboardFacade {
         eventData: filteredData,
       };
     });
+  }
+
+  updateIsLoading() :void {
+    this.dashboardStore.update((state) => {
+      return {
+        ...state,
+        isLoading: true
+      }
+    })
   }
 }

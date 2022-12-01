@@ -7,7 +7,6 @@ import { tap } from 'rxjs';
 import { DashboardQuery } from './store/dashboard.query';
 import { DashboardFacade } from './store/dashboard.facade';
 import { FormControl } from '@angular/forms';
-import { MatSelect } from '@angular/material/select';
 import { HttpParams } from '@angular/common/http';
 import { AppService } from '../app.service';
 
@@ -20,8 +19,6 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   @ViewChild(MatSort) sort: MatSort | null = null;
-
-  @ViewChild(MatSelect) select: MatSelect | null = null;
 
   displayedColumns: string[] = ['Event Type', 'severity', 'User', 'Date'];
 
@@ -48,6 +45,8 @@ export class DashboardComponent implements OnInit {
     })
   );
 
+  isLoading$= this.dashboardQuery.selectedIsLoading$;
+
   constructor(
     private dashboardFacade: DashboardFacade,
     private dashboardQuery: DashboardQuery,
@@ -55,6 +54,8 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.dashboardFacade.updateIsLoading();
+
     this.dashboardFacade.loadEventData().subscribe();
   }
 

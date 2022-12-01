@@ -6,9 +6,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
-import { ChipModule } from '../../../../../libs/ui/chip/chip.module';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {ChipModule} from "../../../../../libs";
+
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -22,6 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ChipModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule
+
   ],
   exports: [DashboardComponent],
 })
