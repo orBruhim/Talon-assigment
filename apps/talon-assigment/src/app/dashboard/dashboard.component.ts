@@ -32,9 +32,9 @@ export class DashboardComponent implements OnInit {
     tap((eventData: TalonEvent[]) => {
       this.dataSource = new MatTableDataSource(eventData);
 
-      this.dataSource!.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
 
-      this.dataSource!.sort = this.sort;
+      this.dataSource.sort = this.sort;
 
       eventData.map((event) => {
         if (this.eventsValues.includes(event.eventType)) {
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
     })
   );
 
-  isLoading$= this.dashboardQuery.selectedIsLoading$;
+  isLoading$ = this.dashboardQuery.selectedIsLoading$;
 
   constructor(
     private dashboardFacade: DashboardFacade,
@@ -63,13 +63,16 @@ export class DashboardComponent implements OnInit {
     this.updateTableData();
   }
 
-  onFilterCancelled(event: any, type: string) {
+  onFilterCancelled(event: Event, type: string) {
     event.stopPropagation();
 
     const value = this.eventsValuesControls?.value?.filter(
       (item) => item !== type
     );
-    this.eventsValuesControls.setValue(value!);
+    if (!value) {
+      return;
+    }
+    this.eventsValuesControls.setValue(value);
 
     this.updateTableData();
   }
@@ -93,8 +96,8 @@ export class DashboardComponent implements OnInit {
   }
 
   private resetPaginator(): void {
-    if (this.dataSource!.paginator) {
-      this.dataSource!.paginator.firstPage();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 }

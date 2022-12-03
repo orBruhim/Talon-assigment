@@ -21,7 +21,8 @@
         ],
         "styles": [
           "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-          "apps/talon-assigment/src/styles.scss"
+          "apps/talon-assigment/src/styles.scss",
+          "libs/styles/settings.scss"
         ],
         "scripts": []
       },

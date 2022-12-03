@@ -1,46 +1,45 @@
 :host {
   display: block;
-  background-color: #222b36;
+  background-color: var( --background-color-black);
 
   * {
-    font-family: 'Rubik', sans-serif;
-    color: #ffffff;
+    color: var(--background-color-white);
   }
 
   .header {
-    padding-left: 16px;
-    padding-top: 17px;
+    padding-left: var(--space-16);
+    padding-top:var(--space-17);
 
     .select-container {
-      padding: 14px 0 13px;
+      padding: var(--space-14) 0 var(--space-13);
       width: 400px;
       height: 61px;
       position: relative;
 
       mat-select{
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: var(--space-6);
+        padding-bottom: var(--space-6);
       }
 
       mat-form-field {
         width: 100%;
         height: 100%;
         align-content: center;
-        padding-bottom: 10px;
+        padding-bottom: var(--space-10);
       }
 
       .chip-list {
         display: flex;
-        gap: 7px;
+        gap: var(--space-7);
         align-items: center;
       }
     }
 
     .mat-select {
-      background-color: #222b36;
+      background-color: var( --background-color-black);
     }
     .mat-option {
-      background-color: #222b36;
+      background-color: var( --background-color-black);
     }
   }
 
@@ -61,25 +60,25 @@
   table {
     width: 100%;
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--font-size-14);
 
     .first-td {
-      padding-left: 83px;
+      padding-left: var(--space-83);
     }
 
     td {
       text-align: left;
       justify-content: left;
       width: 25%;
-      border-bottom: 1px solid #3d4752;
-      padding-left: 43px;
+      border-bottom: 1px solid var(--background-color-button-gray);
+      padding-left: var(--space-43);
       height: 76px;
     }
 
     th {
       text-align: left;
-      border-bottom: 1px solid #3d4752;
-      padding-left: 43px;
+      border-bottom: 1px solid var(--background-color-button-gray);
+      padding-left: var(--space-43);
       height: 76px;
 
 
@@ -98,21 +97,21 @@
       width: fit-content;
 
       .low {
-        background-color: #3a90e5;
+        background-color: var( --background-color-low-chip);
       }
 
       .medium {
-        background-color: #ffb547;
+        background-color: var( --background-color-medium-chip);
       }
 
       .high {
-        background-color: #f06161;
+        background-color: var( --background-color-large-chip);
       }
     }
   }
 
   .mat-form-field {
-    font-size: 14px;
+    font-size: var(--font-size-14);
     width: 100%;
   }
 }
