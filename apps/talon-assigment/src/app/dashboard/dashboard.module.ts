@@ -8,9 +8,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {ChipModule} from "../../../../../libs";
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ChipModule } from '../../../../../libs';
+import { DashboardRoutingModule } from './dashboard.routing-module';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -24,8 +24,8 @@ import {ChipModule} from "../../../../../libs";
     ChipModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
-
+    MatProgressSpinnerModule,
+    DashboardRoutingModule,
   ],
   exports: [DashboardComponent],
 })
