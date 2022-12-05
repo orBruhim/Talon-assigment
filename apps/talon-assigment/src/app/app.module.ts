@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app.routing-module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -24,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

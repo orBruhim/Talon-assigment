@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'talon-assigment-login',
@@ -13,7 +14,27 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   });
 
-  login(): void {}
+  constructor(private loginService: LoginService) {}
 
-  signUp(): void {}
+  login(): void {
+    this.loginService
+      .login(
+        this.loginForm.controls.email.value || '',
+        this.loginForm.controls.password.value || ''
+      )
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
+  signUp(): void {
+    this.loginService
+      .signUp(
+        this.loginForm.controls.email.value || '',
+        this.loginForm.controls.password.value || ''
+      )
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
 }
