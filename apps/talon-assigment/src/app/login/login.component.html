@@ -1,5 +1,24 @@
-<!--<form >-->
-<!--  <input formControlName="email">-->
-<!--  <input formControlName = "password">-->
-<!--</form>-->
-<p> or</p>
+<form [formGroup]="loginForm" class="form-wrapper">
+  <mat-form-field class="input-wrapper">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+    <mat-error *ngIf="loginForm?.controls?.email?.errors && loginForm?.controls?.email?.errors?.['email'] && !loginForm?.controls?.email?.errors?.['required']">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="loginForm?.controls?.email?.errors?.['required']">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label> Password</mat-label>
+    <input matInput formControlName="password" type="password">
+    <mat-error *ngIf="loginForm.controls.password.errors">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <div class="buttons-wrapper">
+  <button mat-button (click)="login()"> Login </button>
+  <button mat-button (click)="signUp()"> Sign Up </button>
+  </div>
+
+</form>

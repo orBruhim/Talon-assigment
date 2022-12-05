@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    mat-label {
+      color: var(--background-color-white);
+    }
+
+    input {
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--background-color-gray);
+      color: var(--background-color-white);
+
+      &::placeholder {
+        color: var(--background-color-white);
+
+      }
+    }
+  }
+
+  .buttons-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+
+    button {
+      color: white;
+      border: 1px solid var(--background-color-gray);
+      border-radius: 3px;
+      background-color: var(--background-color-button-gray);
+    }
+  }
+}
