@@ -43,4 +43,8 @@ export class LoginService {
   logout(): void {
     this.userSubject.next(null);
   }
+
+  autoLogin(): void {}
+
+  autoLogout(): void {}
 }
