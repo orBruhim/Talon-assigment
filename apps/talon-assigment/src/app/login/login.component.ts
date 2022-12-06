@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'talon-assigment-login',
@@ -14,8 +15,7 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   });
 
-  constructor(private loginService: LoginService) {}
-
+  constructor(private loginService: LoginService, private router: Router) {}
   login(): void {
     this.loginService
       .login(
@@ -23,6 +23,7 @@ export class LoginComponent {
         this.loginForm.controls.password.value || ''
       )
       .subscribe((data) => {
+        this.router.navigate(['/dashboard']);
         console.log(data);
       });
   }
@@ -34,6 +35,7 @@ export class LoginComponent {
         this.loginForm.controls.password.value || ''
       )
       .subscribe((data) => {
+        this.router.navigate(['/dashboard']);
         console.log(data);
       });
   }

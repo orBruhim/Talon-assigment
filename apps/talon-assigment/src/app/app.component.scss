@@ -1,4 +1,15 @@
 :host{
   height: 100%;
   display: block;
+
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 4px;
+
+    button {
+      color: var(--background-color-white);
+      border: 1px solid var(--background-color-gray);
+    }
+  }
 }
