@@ -9,11 +9,7 @@ import { tap } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  user$ = this.loginService.user$.pipe(
-    tap((data) => {
-      console.log(data);
-    })
-  );
+  user$ = this.loginService.user$.pipe(tap((user) => {}));
   constructor(private loginService: LoginService, private router: Router) {}
   logout(): void {
     this.loginService.logout();

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'talon-assigment-login',
@@ -22,10 +23,8 @@ export class LoginComponent {
         this.loginForm.controls.email.value || '',
         this.loginForm.controls.password.value || ''
       )
-      .subscribe((data) => {
-        this.router.navigate(['/dashboard']);
-        console.log(data);
-      });
+      .pipe(tap(() => {}))
+      .subscribe();
   }
 
   signUp(): void {
@@ -36,7 +35,6 @@ export class LoginComponent {
       )
       .subscribe((data) => {
         this.router.navigate(['/dashboard']);
-        console.log(data);
       });
   }
 }

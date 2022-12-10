@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LoginResponse } from './login.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { LoginResponse } from './login.model';
 export class LoginService {
   private userSubject = new Subject<LoginResponse | null>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get user$(): Observable<LoginResponse | null> {
     return this.userSubject.asObservable();
@@ -36,6 +37,7 @@ export class LoginService {
       })
       .pipe(
         tap((loginResponse) => {
+          this.router.navigate(['/dashboard']);
           this.userSubject.next(loginResponse);
         })
       );

@@ -12,9 +12,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthInterceptor } from './auth.interceptor';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -24,6 +25,7 @@ import { AuthInterceptor } from './auth.interceptor';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
+    LoginModule,
   ],
   providers: [AuthInterceptor],
   bootstrap: [AppComponent],
