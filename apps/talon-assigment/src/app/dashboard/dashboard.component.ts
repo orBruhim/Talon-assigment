@@ -1,4 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TalonEvent } from '../app.model';
 import { MatPaginator } from '@angular/material/paginator';
@@ -14,6 +19,7 @@ import { AppService } from '../app.service';
   selector: 'talon-assigment-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;

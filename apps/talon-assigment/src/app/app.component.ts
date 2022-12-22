@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { LoginService } from './login/login.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
@@ -7,6 +7,7 @@ import { tap } from 'rxjs';
   selector: 'talon-assigment-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   user$ = this.loginService.user$.pipe(tap((user) => {}));
