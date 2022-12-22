@@ -8,7 +8,6 @@ import { tap } from 'rxjs';
   selector: 'talon-assigment-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   loginForm = new FormGroup({
@@ -23,7 +22,11 @@ export class LoginComponent {
         this.loginForm.controls.email.value || '',
         this.loginForm.controls.password.value || ''
       )
-      .pipe(tap(() => {}))
+      .pipe(
+        tap(() => {
+          this.router.navigate(['/dashboard']);
+        })
+      )
       .subscribe();
   }
 

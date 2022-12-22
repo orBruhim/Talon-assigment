@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login/login.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
@@ -8,9 +8,13 @@ import { tap } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   user$ = this.loginService.user$.pipe(tap((user) => {}));
   constructor(private loginService: LoginService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.loginService.autoLogin();
+  }
   logout(): void {
     this.loginService.logout();
     this.router.navigate(['/login']);
