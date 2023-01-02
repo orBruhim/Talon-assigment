@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LoginResponse } from './login.model';
 import { Router } from '@angular/router';
+import { TalonUser } from '../app.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,8 @@ export class LoginService implements OnDestroy {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // get user$(): Observable<LoginResponse | null> {
-  //   return this.userSubject.asObservable();
-  // }
-
-  signUp(email: string, password: string): Observable<LoginResponse> {
+  signUp(user: TalonUser): Observable<LoginResponse> {
+    const { email, password } = user;
     return this.http
       .post<LoginResponse>('http://localhost:3000/register', {
         email,
@@ -33,7 +31,8 @@ export class LoginService implements OnDestroy {
       );
   }
 
-  login(email: string, password: string): Observable<LoginResponse> {
+  login(user: TalonUser): Observable<LoginResponse> {
+    const { email, password } = user;
     return this.http
       .post<LoginResponse>('http://localhost:3000/login', {
         email,
@@ -53,13 +52,12 @@ export class LoginService implements OnDestroy {
   }
 
   autoLogin(): void {
-    const user = JSON.parse(localStorage.getItem('userData')!);
-
-    if (!user) {
-      return;
-    }
-    this.user$.next(user);
-    this.autoLogout(60 * 60 * 1000);
+    // const user = JSON.parse(localStorage.getItem('userData')!);
+    // if (!user) {
+    //   return;
+    // }
+    // this.user$.next(user);
+    // this.autoLogout(60 * 60 * 1000);
   }
 
   autoLogout(tokenTime: number): void {

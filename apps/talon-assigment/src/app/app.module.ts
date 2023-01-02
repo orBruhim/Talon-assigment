@@ -4,15 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
-import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app.routing-module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthInterceptor } from './auth.interceptor';
 import { LoginModule } from './login/login.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,13 +21,23 @@ import { LoginModule } from './login/login.module';
     BrowserAnimationsModule,
     DashboardModule,
     AppRoutingModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
     LoginModule,
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+        },
+      }
+    ),
+    EffectsModule.forRoot([]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [AuthInterceptor],
+  // providers: [AuthInterceptor],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
