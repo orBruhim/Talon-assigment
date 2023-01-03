@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { TalonUser } from '../../app.model';
-import { login, logout, signup } from './login.actions';
+import { login, logout } from './login.actions';
 
 export interface LoginState {
   user: TalonUser | null;
@@ -20,11 +20,6 @@ export const loginReducer = createReducer(
   on(logout, () => {
     return {
       user: null,
-    };
-  }),
-  on(signup, (state, action) => {
-    return {
-      user: action.user,
     };
   })
 );

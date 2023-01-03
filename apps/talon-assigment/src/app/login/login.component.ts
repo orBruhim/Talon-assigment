@@ -37,7 +37,6 @@ export class LoginComponent {
       .pipe(
         tap(() => {
           this.store.dispatch(login({ user }));
-          this.router.navigate(['/dashboard']);
         })
       )
       .subscribe();
