@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
+import { LoginService } from './reducers/login.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { login, signup } from './reducers/login.actions';
-import { isLoggedIn } from './login.selector';
+import { isLoggedIn } from './reducers/login.selector';
 
 @Component({
   selector: 'talon-assigment-login',

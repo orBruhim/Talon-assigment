@@ -31,6 +31,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
         runtimeChecks: {
           strictActionImmutability: true,
           strictStateImmutability: true,
+          strictActionTypeUniqueness: true,
+          strictActionWithinNgZone: true,
         },
       }
     ),

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { LoginService } from './login/login.service';
 import { Router } from '@angular/router';
 
 import { select, Store } from '@ngrx/store';
-import { isLoggedIn } from './login/login.selector';
+import { isLoggedIn } from './login/reducers/login.selector';
+import { LoginService } from './login/reducers/login.service';
 import { logout } from './login/reducers/login.actions';
 
 @Component({

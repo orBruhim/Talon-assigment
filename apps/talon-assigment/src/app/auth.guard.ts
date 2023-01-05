@@ -7,9 +7,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { LoginService } from './login/login.service';
 import { select, Store } from '@ngrx/store';
-import { isLoggedIn } from './login/login.selector';
+import { LoginService } from './login/reducers/login.service';
+import { isLoggedIn } from './login/reducers/login.selector';
 
 @Injectable({
   providedIn: 'root',

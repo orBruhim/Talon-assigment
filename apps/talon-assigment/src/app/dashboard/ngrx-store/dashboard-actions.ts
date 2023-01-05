@@ -1,14 +1,11 @@
-import { createAction, createActionGroup, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { TalonEvent } from '../../app.model';
 
-export const EventDataActions = createActionGroup({
-  source: 'Event Data API',
-  events: {
-    'Event Data API': props<{ eventData: TalonEvent[] }>(),
-  },
-});
-export const updateFilteredData = createAction(
-  'updateFilteredData',
-  props<{ filteredData: TalonEvent[] }>()
+export const loadAllEvents = createAction(
+  '[Events Resolver] load all Events Data'
 );
-export const updateIsLoading = createAction('updateIsLoading');
+
+export const allEventsHasBeenLoaded = createAction(
+  '[Events Effects] Bring events data from backend',
+  props<{ events: TalonEvent[] }>()
+);

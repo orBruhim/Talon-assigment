@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { LoginResponse } from './login.model';
+import { LoginResponse } from '../login.model';
 import { Router } from '@angular/router';
-import { TalonUser } from '../app.model';
+import { TalonUser } from '../../app.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,6 @@ export class LoginService implements OnDestroy {
       .pipe(
         takeUntil(this.destroySubject),
         tap((loginResponse) => {
-          console.log(loginResponse);
           this.handleAuth(loginResponse);
         })
       );
@@ -68,7 +67,6 @@ export class LoginService implements OnDestroy {
 
   private handleAuth(loginResponse: LoginResponse) {
     this.user$.next(loginResponse);
-    console.log(loginResponse, 'user next');
     // loginResponse &&
     //   localStorage.setItem('userData', JSON.stringify(loginResponse));
     // this.autoLogout(60 * 60 * 1000);

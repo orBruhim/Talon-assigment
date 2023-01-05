@@ -1,11 +1,20 @@
-import { createReducer, on } from '@ngrx/store';
-import { EventDataActions } from './dashboard-actions';
 import { TalonEvent } from '../../app.model';
+import { createReducer, on } from '@ngrx/store';
+import { allEventsHasBeenLoaded } from './dashboard-actions';
 
-export const initialState: TalonEvent[] = [];
+export interface DashboardState {
+  events: TalonEvent[];
+}
 
-export const loadedEventsDataReducer = createReducer(
-  initialState,
-  // on(EventDataActions.eventDataApi, (state, { eventData }) => eventData)
-  on(EventDataActions.eventDataApi, (state, { eventData }) => eventData)
+export const initialDashboardState: DashboardState = {
+  events: [],
+};
+
+export const DashboardReducer = createReducer(
+  initialDashboardState,
+  on(allEventsHasBeenLoaded, (state, action) => {
+    return {
+      events: action.events,
+    };
+  })
 );

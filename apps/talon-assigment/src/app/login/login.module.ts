@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { loginReducer } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { LoginEffects } from './login.effects';
+import { LoginEffects } from './reducers/login.effects';
 
 @NgModule({
   declarations: [LoginComponent],
