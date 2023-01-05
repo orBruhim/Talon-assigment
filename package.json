@@ -25,6 +25,8 @@
     "@angular/router": "~14.2.0",
     "@datorama/akita": "^7.1.1",
     "@datorama/akita-ngdevtools": "^7.0.0",
+    "@ngrx/store": "14.3",
+    "@ngrx/store-devtools": "14.3",
     "@nrwl/angular": "15.0.4",
     "@storybook/angular": "^6.5.14",
     "json-server-auth": "^2.1.0",
