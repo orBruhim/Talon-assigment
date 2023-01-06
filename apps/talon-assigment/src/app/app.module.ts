@@ -6,13 +6,14 @@ import { AppComponent } from './app.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
-import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app.routing-module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoginModule } from './login/login.module';
+import { StoreModule } from '@ngrx/store';
+import { EntityDataModule } from '@ngrx/data';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,8 @@ import { LoginModule } from './login/login.module';
     MatInputModule,
     MatButtonModule,
     LoginModule,
+    StoreModule.forRoot({}),
+    EntityDataModule.forRoot({}),
   ],
   providers: [AuthInterceptor],
   bootstrap: [AppComponent],

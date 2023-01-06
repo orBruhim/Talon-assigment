@@ -11,6 +11,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChipModule } from '../../../../../libs';
 import { DashboardRoutingModule } from './dashboard.routing-module';
+import { EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+
+const entityMetaData: EntityMetadataMap = {
+  Events: {},
+};
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -29,4 +34,8 @@ import { DashboardRoutingModule } from './dashboard.routing-module';
   ],
   exports: [DashboardComponent],
 })
-export class DashboardModule {}
+export class DashboardModule {
+  constructor(private entityDefinitionService: EntityDefinitionService) {
+    entityDefinitionService.registerMetadataMap(entityMetaData);
+  }
+}
