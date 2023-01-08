@@ -14,6 +14,7 @@ import { AuthInterceptor } from './auth.interceptor';
 import { LoginModule } from './login/login.module';
 import { StoreModule } from '@ngrx/store';
 import { EntityDataModule } from '@ngrx/data';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,18 @@ import { EntityDataModule } from '@ngrx/data';
     MatInputModule,
     MatButtonModule,
     LoginModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+          strictActionTypeUniqueness: true,
+          strictActionWithinNgZone: true,
+        },
+      }
+    ),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     EntityDataModule.forRoot({}),
   ],
   providers: [AuthInterceptor],

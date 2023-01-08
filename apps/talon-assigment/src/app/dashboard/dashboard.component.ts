@@ -8,12 +8,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TalonEvent } from '../app.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { DashboardQuery } from './store/dashboard.query';
 import { DashboardFacade } from './store/dashboard.facade';
 import { FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AppService } from '../app.service';
+import { EventsEntityService } from './ngrx-store/events-entity-service';
+import { EventsDataService } from './ngrx-store/events-data.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'talon-assigment-dashboard',
@@ -34,35 +37,27 @@ export class DashboardComponent implements OnInit {
 
   eventsValues: string[] = [];
 
-  dataSource$ = this.dashboardQuery.selectedEventData$.pipe(
-    tap((eventData: TalonEvent[]) => {
-      this.dataSource = new MatTableDataSource(eventData);
-
-      this.dataSource.paginator = this.paginator;
-
-      this.dataSource.sort = this.sort;
-
-      eventData.map((event) => {
-        if (this.eventsValues.includes(event.eventType)) {
-          return;
-        }
-        this.eventsValues.push(event.eventType);
-      });
+  dataSource$ = this.activatedRoute.data.pipe(
+    map((data) => {
+      return data?.['Event'];
     })
   );
-
   isLoading$ = this.dashboardQuery.selectedIsLoading$;
 
   constructor(
     private dashboardFacade: DashboardFacade,
     private dashboardQuery: DashboardQuery,
-    private appService: AppService
+    private appService: AppService,
+    private activatedRoute: ActivatedRoute,
+    private eventsEntityService: EventsEntityService,
+    private eventDataService: EventsDataService
   ) {}
 
   ngOnInit(): void {
-    this.dashboardFacade.updateIsLoading();
-
-    this.dashboardFacade.loadEventData().subscribe();
+    // this.dashboardFacade.updateIsLoading();
+    //
+    // this.dashboardFacade.loadEventData().subscribe();
+    // .subscribe((data) => console.log(data));
   }
 
   applyFilter() {

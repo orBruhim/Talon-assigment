@@ -14,7 +14,6 @@ const routes: Routes = [
       import('./dashboard/dashboard.module').then(
         ({ DashboardModule }) => DashboardModule
       ),
-    canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];

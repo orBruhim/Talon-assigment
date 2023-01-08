@@ -11,10 +11,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChipModule } from '../../../../../libs';
 import { DashboardRoutingModule } from './dashboard.routing-module';
-import { EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+import {
+  EntityDataService,
+  EntityDefinitionService,
+  EntityMetadataMap,
+} from '@ngrx/data';
+import { EventsDataService } from './ngrx-store/events-data.service';
+import { StoreModule } from '@ngrx/store';
+import { eventsReducer } from './ngrx-store/events.reducer';
 
 const entityMetaData: EntityMetadataMap = {
-  Events: {},
+  Event: {},
 };
 
 @NgModule({
@@ -31,11 +38,17 @@ const entityMetaData: EntityMetadataMap = {
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     DashboardRoutingModule,
+    StoreModule.forFeature('events', eventsReducer),
   ],
   exports: [DashboardComponent],
 })
 export class DashboardModule {
-  constructor(private entityDefinitionService: EntityDefinitionService) {
+  constructor(
+    private entityDefinitionService: EntityDefinitionService,
+    private entityDataService: EntityDataService,
+    private eventsDataService: EventsDataService
+  ) {
     entityDefinitionService.registerMetadataMap(entityMetaData);
+    entityDataService.registerService('Event', eventsDataService);
   }
 }
