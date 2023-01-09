@@ -4,8 +4,6 @@ import { TalonEvent } from '../app.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { tap } from 'rxjs';
-import { DashboardQuery } from './store/dashboard.query';
-import { DashboardFacade } from './store/dashboard.facade';
 import { FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AppService } from '../app.service';
@@ -50,12 +48,7 @@ export class DashboardComponent {
     })
   );
 
-  constructor(
-    private dashboardFacade: DashboardFacade,
-    private dashboardQuery: DashboardQuery,
-    private appService: AppService,
-    private store: Store
-  ) {}
+  constructor(private appService: AppService, private store: Store) {}
   applyFilter() {
     this.updateTableData();
   }

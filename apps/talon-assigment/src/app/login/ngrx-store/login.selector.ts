@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LoginState } from './index';
+import { LoginState } from './login.reducers';
 
 export const selectLoginState = createFeatureSelector<LoginState>('login');
 

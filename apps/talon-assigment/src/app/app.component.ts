@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { select, Store } from '@ngrx/store';
-import { isLoggedIn } from './login/reducers/login.selector';
-import { LoginService } from './login/reducers/login.service';
-import { logout } from './login/reducers/login.actions';
+import { logout } from './login/ngrx-store/login.actions';
+import { isLoggedIn } from './login/ngrx-store/login.selector';
+import { LoginService } from './login/ngrx-store/login.service';
 
 @Component({
   selector: 'talon-assigment-root',
@@ -12,8 +12,7 @@ import { logout } from './login/reducers/login.actions';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  // user$ = this.loginService.user$.pipe(tap((user) => {}));
+export class AppComponent {
   isLoggedIn$ = this.store.pipe(select(isLoggedIn));
   constructor(
     private loginService: LoginService,
@@ -21,9 +20,6 @@ export class AppComponent implements OnInit {
     private store: Store
   ) {}
 
-  ngOnInit(): void {
-    this.loginService.autoLogin();
-  }
   logout(): void {
     this.loginService.logout();
     this.store.dispatch(logout());

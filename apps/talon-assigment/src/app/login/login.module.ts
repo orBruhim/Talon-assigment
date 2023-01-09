@@ -11,9 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { loginReducer } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { LoginEffects } from './reducers/login.effects';
+import { loginReducer } from './ngrx-store/login.reducers';
+import { LoginEffects } from './ngrx-store/login.effects';
 
 @NgModule({
   declarations: [LoginComponent],
