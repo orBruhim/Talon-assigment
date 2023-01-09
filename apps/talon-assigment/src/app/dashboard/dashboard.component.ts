@@ -14,6 +14,8 @@ import { DashboardFacade } from './store/dashboard.facade';
 import { FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AppService } from '../app.service';
+import { select, Store } from '@ngrx/store';
+import { selectAllEvents } from './ngrx-store/events.selector';
 
 @Component({
   selector: 'talon-assigment-dashboard',
@@ -34,7 +36,8 @@ export class DashboardComponent implements OnInit {
 
   eventsValues: string[] = [];
 
-  dataSource$ = this.dashboardQuery.selectedEventData$.pipe(
+  dataSource$ = this.store.pipe(
+    select(selectAllEvents),
     tap((eventData: TalonEvent[]) => {
       this.dataSource = new MatTableDataSource(eventData);
 
@@ -51,12 +54,17 @@ export class DashboardComponent implements OnInit {
     })
   );
 
+  // dataSource$ = this.store
+  //   .pipe(select(selectAllEvents))
+  //   .subscribe((data) => console.log(data));
+
   isLoading$ = this.dashboardQuery.selectedIsLoading$;
 
   constructor(
     private dashboardFacade: DashboardFacade,
     private dashboardQuery: DashboardQuery,
-    private appService: AppService
+    private appService: AppService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
