@@ -7,8 +7,8 @@ export interface TalonEvent {
 }
 
 export interface TalonUser {
-  name: string;
   email: string;
+  password: string;
 }
 
 export type TalonOs = 'windows' | 'mac' | '';

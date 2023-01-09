@@ -8,6 +8,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { environment } from '../../environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { loginReducer } from './ngrx-store/login.reducers';
+import { LoginEffects } from './ngrx-store/login.effects';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -18,6 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     HttpClientModule,
     ReactiveFormsModule,
+    StoreModule.forFeature('login', loginReducer),
+    EffectsModule.forFeature([LoginEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   exports: [LoginComponent],
 })

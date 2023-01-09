@@ -1,12 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { isLoggedIn } from './ngrx-store/login.selector';
+import { LoginService } from './ngrx-store/login.service';
+import { login, signup } from './ngrx-store/login.actions';
 
 @Component({
   selector: 'talon-assigment-login',
@@ -20,29 +19,37 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   });
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  isLoggedIn$ = this.store.pipe(select(isLoggedIn));
+
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private store: Store
+  ) {}
+
   login(): void {
+    const user = {
+      email: this.loginForm.controls.email.value || '',
+      password: this.loginForm.controls.password.value || '',
+    };
     this.loginService
-      .login(
-        this.loginForm.controls.email.value || '',
-        this.loginForm.controls.password.value || ''
-      )
+      .login(user)
       .pipe(
         tap(() => {
-          this.router.navigate(['/dashboard']);
+          this.store.dispatch(login({ user }));
         })
       )
       .subscribe();
   }
 
   signUp(): void {
-    this.loginService
-      .signUp(
-        this.loginForm.controls.email.value || '',
-        this.loginForm.controls.password.value || ''
-      )
-      .subscribe((data) => {
-        this.router.navigate(['/dashboard']);
-      });
+    const user = {
+      email: this.loginForm.controls.email.value || '',
+      password: this.loginForm.controls.password.value || '',
+    };
+    this.loginService.signUp(user).subscribe(() => {
+      this.store.dispatch(signup({ user }));
+      this.router.navigate(['/dashboard']);
+    });
   }
 }

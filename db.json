@@ -92871,5 +92871,21 @@
       "time": "2021-11-01T19:30:17.973Z"
     }
   ],
-  "users": []
+  "users": [
+    {
+      "email": "eliran@gmail.com",
+      "password": "1234",
+      "id": 1
+    },
+    {
+      "email": "orfffdddddbhjbjNewdOne@gmail.com",
+      "password": "$2a$10$HpnmpvA0VfA4ItjhPtIMj.ACSLBqBZ1Hb4xqKchz08Ds7wPyBRYYm",
+      "id": 2
+    },
+    {
+      "email": "orfffdddddddbhjbjNewdOne@gmail.com",
+      "password": "$2a$10$SudWXHp0G6flLZa/oszfOuhust6e2QkIA5dFmjVava3/oxq0pQPYy",
+      "id": 3
+    }
+  ]
 }
