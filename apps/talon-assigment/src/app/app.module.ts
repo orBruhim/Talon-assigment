@@ -9,10 +9,11 @@ import { AppRoutingModule } from './app.routing-module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthInterceptor } from './auth.interceptor';
 import { LoginModule } from './login/login.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,10 +22,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserAnimationsModule,
     DashboardModule,
     AppRoutingModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
     LoginModule,
+    EffectsModule.forRoot([]),
     StoreModule.forRoot(
       {},
       {
@@ -36,10 +39,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
         },
       }
     ),
-    EffectsModule.forRoot([]),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  // providers: [AuthInterceptor],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

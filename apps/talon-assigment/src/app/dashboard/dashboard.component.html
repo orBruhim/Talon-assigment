@@ -10,7 +10,6 @@
             <talon-assigment-chip
               *ngFor="let type of eventsValuesControls.value"
               [filterValue]="type"
-              (filterCancelled)="onFilterCancelled($event, type)"
             >
             </talon-assigment-chip>
           </div>
@@ -26,10 +25,6 @@
       </mat-select>
     </mat-form-field>
   </div>
-
-<!--  <div class="loader" *ngIf="isLoading$ | async">-->
-<!--    <mat-spinner></mat-spinner>-->
-<!--  </div>-->
 
   <div *ngIf="dataSource$ | async">
     <table mat-table [dataSource]="dataSource" matSort>

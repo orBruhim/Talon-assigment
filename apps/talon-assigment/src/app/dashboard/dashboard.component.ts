@@ -4,12 +4,14 @@ import { TalonEvent } from '../app.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { tap } from 'rxjs';
+import { DashboardQuery } from './store/dashboard.query';
 import { DashboardFacade } from './store/dashboard.facade';
 import { FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AppService } from '../app.service';
 import { select, Store } from '@ngrx/store';
-import { selectAllEvents } from './ngrx-store/dashboard-selector';
+import { selectAllEvents } from './ngrx-store/events.selector';
+import { allEventsHasBeenLoaded } from './ngrx-store/events.actions';
 
 @Component({
   selector: 'talon-assigment-dashboard',
@@ -48,31 +50,29 @@ export class DashboardComponent {
     })
   );
 
-  // isLoading$ = this.dashboardQuery.selectedIsLoading$;
-
   constructor(
     private dashboardFacade: DashboardFacade,
+    private dashboardQuery: DashboardQuery,
     private appService: AppService,
-    private store: Store<TalonEvent[]>
+    private store: Store
   ) {}
-
   applyFilter() {
     this.updateTableData();
   }
 
-  onFilterCancelled(event: Event, type: string) {
-    event.stopPropagation();
-
-    const value = this.eventsValuesControls?.value?.filter(
-      (item) => item !== type
-    );
-    if (!value) {
-      return;
-    }
-    this.eventsValuesControls.setValue(value);
-
-    this.updateTableData();
-  }
+  // onFilterCancelled(event: Event, type: string) {
+  //   event.stopPropagation();
+  //
+  //   const value = this.eventsValuesControls?.value?.filter(
+  //     (item) => item !== type
+  //   );
+  //   if (!value) {
+  //     return;
+  //   }
+  //   this.eventsValuesControls.setValue(value);
+  //
+  //   this.updateTableData();
+  // }
 
   private updateTableData(): void {
     let filterData = new HttpParams();
@@ -84,7 +84,7 @@ export class DashboardComponent {
       .getFilteredEventData(filterData)
       .pipe(
         tap((filteredData: TalonEvent[]) => {
-          // this.dashboardFacade.updateFilteredData(filteredData);
+          this.store.dispatch(allEventsHasBeenLoaded({ events: filteredData }));
         })
       )
       .subscribe();
