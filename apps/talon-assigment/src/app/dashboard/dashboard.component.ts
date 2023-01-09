@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TalonEvent } from '../app.model';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,13 +9,17 @@ import { DashboardFacade } from './store/dashboard.facade';
 import { FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AppService } from '../app.service';
+import { select, Store } from '@ngrx/store';
+import { selectAllEvents } from './ngrx-store/events.selector';
+import { allEventsHasBeenLoaded } from './ngrx-store/events.actions';
 
 @Component({
   selector: 'talon-assigment-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   @ViewChild(MatSort) sort: MatSort | null = null;
@@ -28,7 +32,8 @@ export class DashboardComponent implements OnInit {
 
   eventsValues: string[] = [];
 
-  dataSource$ = this.dashboardQuery.selectedEventData$.pipe(
+  dataSource$ = this.store.pipe(
+    select(selectAllEvents),
     tap((eventData: TalonEvent[]) => {
       this.dataSource = new MatTableDataSource(eventData);
 
@@ -45,37 +50,29 @@ export class DashboardComponent implements OnInit {
     })
   );
 
-  isLoading$ = this.dashboardQuery.selectedIsLoading$;
-
   constructor(
     private dashboardFacade: DashboardFacade,
     private dashboardQuery: DashboardQuery,
-    private appService: AppService
+    private appService: AppService,
+    private store: Store
   ) {}
-
-  ngOnInit(): void {
-    this.dashboardFacade.updateIsLoading();
-
-    this.dashboardFacade.loadEventData().subscribe();
-  }
-
   applyFilter() {
     this.updateTableData();
   }
 
-  onFilterCancelled(event: Event, type: string) {
-    event.stopPropagation();
-
-    const value = this.eventsValuesControls?.value?.filter(
-      (item) => item !== type
-    );
-    if (!value) {
-      return;
-    }
-    this.eventsValuesControls.setValue(value);
-
-    this.updateTableData();
-  }
+  // onFilterCancelled(event: Event, type: string) {
+  //   event.stopPropagation();
+  //
+  //   const value = this.eventsValuesControls?.value?.filter(
+  //     (item) => item !== type
+  //   );
+  //   if (!value) {
+  //     return;
+  //   }
+  //   this.eventsValuesControls.setValue(value);
+  //
+  //   this.updateTableData();
+  // }
 
   private updateTableData(): void {
     let filterData = new HttpParams();
@@ -87,7 +84,7 @@ export class DashboardComponent implements OnInit {
       .getFilteredEventData(filterData)
       .pipe(
         tap((filteredData: TalonEvent[]) => {
-          this.dashboardFacade.updateFilteredData(filteredData);
+          this.store.dispatch(allEventsHasBeenLoaded({ events: filteredData }));
         })
       )
       .subscribe();

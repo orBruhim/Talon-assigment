@@ -11,6 +11,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChipModule } from '../../../../../libs';
 import { DashboardRoutingModule } from './dashboard.routing-module';
+import { EffectsModule } from '@ngrx/effects';
+import { EventsEffectsService } from './ngrx-store/events.effects';
+import { StoreModule } from '@ngrx/store';
+import { EventsReducer } from './ngrx-store/events.reducer';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -26,6 +30,8 @@ import { DashboardRoutingModule } from './dashboard.routing-module';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     DashboardRoutingModule,
+    EffectsModule.forFeature([EventsEffectsService]),
+    StoreModule.forFeature('events', EventsReducer),
   ],
   exports: [DashboardComponent],
 })
