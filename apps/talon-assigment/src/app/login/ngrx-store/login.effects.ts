@@ -12,7 +12,8 @@ export class LoginEffects {
     () =>
       this.actions$.pipe(
         ofType(login),
-        tap(() => {
+        tap((action) => {
+          localStorage.setItem('user', JSON.stringify(action.user));
           this.router.navigate(['/dashboard']);
         })
       ),
@@ -24,6 +25,7 @@ export class LoginEffects {
       this.actions$.pipe(
         ofType(logout),
         tap(() => {
+          localStorage.removeItem('user');
           this.router.navigate(['/login']);
         })
       ),

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
@@ -13,7 +13,7 @@ import { login, signup } from './ngrx-store/login.actions';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
@@ -26,6 +26,13 @@ export class LoginComponent {
     private router: Router,
     private store: Store
   ) {}
+
+  ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.store.dispatch(login({ user: JSON.parse(user) }));
+    }
+  }
 
   login(): void {
     const user = {
