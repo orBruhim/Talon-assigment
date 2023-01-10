@@ -5,12 +5,13 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { TalonEvent } from '../../app.model';
-import { first, Observable, tap } from 'rxjs';
+import { finalize, first, Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { loadAllEvents } from './events.actions';
 
 @Injectable({ providedIn: 'root' })
 export class EventsResolver implements Resolve<TalonEvent> {
+  isLoading = false;
   constructor(private store: Store) {}
   resolve(
     route: ActivatedRouteSnapshot,
@@ -18,9 +19,13 @@ export class EventsResolver implements Resolve<TalonEvent> {
   ): Observable<any> {
     return this.store.pipe(
       tap(() => {
-        this.store.dispatch(loadAllEvents());
+        if (!this.isLoading) {
+          this.isLoading = true;
+          this.store.dispatch(loadAllEvents());
+        }
       }),
-      first()
+      first(),
+      finalize(() => (this.isLoading = false))
     );
   }
 }

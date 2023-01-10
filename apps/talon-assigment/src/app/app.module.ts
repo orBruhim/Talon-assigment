@@ -9,9 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginModule } from './login/login.module';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +19,6 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
@@ -31,11 +30,12 @@ import { EffectsModule } from '@ngrx/effects';
         runtimeChecks: {
           strictActionImmutability: true,
           strictStateImmutability: true,
-          strictActionTypeUniqueness: true,
-          strictActionWithinNgZone: true,
+          strictStateSerializability: true,
+          strictActionSerializability: true,
         },
       }
     ),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   bootstrap: [AppComponent],
 })
