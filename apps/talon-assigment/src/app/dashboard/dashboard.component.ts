@@ -30,27 +30,23 @@ export class DashboardComponent {
 
   eventsValues: string[] = [];
 
-  // dataSource$ = this.store.pipe(
-  //   select(selectAllEvents),
-  //   tap((eventData: TalonEvent[]) => {
-  //     this.dataSource = new MatTableDataSource(eventData);
-  //
-  //     this.dataSource.paginator = this.paginator;
-  //
-  //     this.dataSource.sort = this.sort;
-  //
-  //     eventData.map((event) => {
-  //       if (this.eventsValues.includes(event.eventType)) {
-  //         return;
-  //       }
-  //       this.eventsValues.push(event.eventType);
-  //     });
-  //   })
-  // );
+  dataSource$ = this.store.pipe(
+    select(selectAllEvents),
+    tap((eventData: TalonEvent[]) => {
+      this.dataSource = new MatTableDataSource(eventData);
 
-  dataSource$ = this.store
-    .pipe(select(selectAllEvents))
-    .subscribe((data) => console.log(data));
+      this.dataSource.paginator = this.paginator;
+
+      this.dataSource.sort = this.sort;
+
+      eventData.map((event) => {
+        if (this.eventsValues.includes(event.eventType)) {
+          return;
+        }
+        this.eventsValues.push(event.eventType);
+      });
+    })
+  );
 
   constructor(private appService: AppService, private store: Store) {}
   applyFilter() {

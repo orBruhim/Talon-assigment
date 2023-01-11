@@ -4,27 +4,29 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { TalonEvent } from '../../app.model';
-import { finalize, first, Observable, tap } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { filter, finalize, first, Observable, tap } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 import { loadAllEvents } from './events.actions';
+import { selectAreEventsLoaded } from './events.selector';
 
 @Injectable({ providedIn: 'root' })
-export class EventsResolver implements Resolve<TalonEvent> {
+export class EventsResolver implements Resolve<boolean> {
   isLoading = false;
   constructor(private store: Store) {}
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<any> {
+  ): Observable<boolean> {
     return this.store.pipe(
-      tap(() => {
-        if (!this.isLoading) {
+      select(selectAreEventsLoaded),
+      tap((areEventsLoaded) => {
+        if (!this.isLoading && !areEventsLoaded) {
           this.isLoading = true;
           this.store.dispatch(loadAllEvents());
         }
       }),
       first(),
+      filter((areEventsLoaded) => areEventsLoaded),
       finalize(() => (this.isLoading = false))
     );
   }

@@ -9,3 +9,8 @@ export const selectAllEvents = createSelector(
   selectEventsState,
   fromEvents.selectAll
 );
+
+export const selectAreEventsLoaded = createSelector(
+  selectEventsState,
+  (state) => state.areEventsLoaded
+);
