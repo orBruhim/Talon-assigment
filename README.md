@@ -1,6 +1,8 @@
 
 ## Talon assigment
 
+***Please notice that this project is not entities appropriate since each "entity" does not have unique property 
+
 Clone the project
 
 ```bash
