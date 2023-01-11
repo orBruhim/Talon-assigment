@@ -26,6 +26,7 @@
     "@datorama/akita": "^7.1.1",
     "@datorama/akita-ngdevtools": "^7.0.0",
     "@ngrx/effects": "14.3",
+    "@ngrx/entity": "14.3",
     "@ngrx/store": "14.3",
     "@ngrx/store-devtools": "14.3",
     "@nrwl/angular": "15.0.4",
