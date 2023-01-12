@@ -12,6 +12,7 @@ import { LoginModule } from './login/login.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EntityDataModule } from '@ngrx/data';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       }
     ),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EntityDataModule.forRoot({}),
   ],
   bootstrap: [AppComponent],
 })

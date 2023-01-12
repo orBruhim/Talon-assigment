@@ -3,13 +3,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TalonEvent } from '../app.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
 import { AppService } from '../app.service';
-import { select, Store } from '@ngrx/store';
-import { selectAllEvents } from './ngrx-store/events.selector';
-import { allEventsHasBeenLoaded } from './ngrx-store/events.actions';
+import { Store } from '@ngrx/store';
+import { EventsEntityService } from './ngrx-store/events-entity.service';
 
 @Component({
   selector: 'talon-assigment-dashboard',
@@ -30,27 +27,17 @@ export class DashboardComponent {
 
   eventsValues: string[] = [];
 
-  dataSource$ = this.store.pipe(
-    select(selectAllEvents),
-    tap((eventData: TalonEvent[]) => {
-      this.dataSource = new MatTableDataSource(eventData);
-
-      this.dataSource.paginator = this.paginator;
-
-      this.dataSource.sort = this.sort;
-
-      eventData.map((event) => {
-        if (this.eventsValues.includes(event.eventType)) {
-          return;
-        }
-        this.eventsValues.push(event.eventType);
-      });
-    })
+  dataSource$ = this.eventsEntitiesService.entities$.subscribe((data) =>
+    console.log(data)
   );
 
-  constructor(private appService: AppService, private store: Store) {}
+  constructor(
+    private appService: AppService,
+    private store: Store,
+    private eventsEntitiesService: EventsEntityService
+  ) {}
   applyFilter() {
-    this.updateTableData();
+    // this.updateTableData();
   }
 
   // onFilterCancelled(event: Event, type: string) {
@@ -67,23 +54,23 @@ export class DashboardComponent {
   //   this.updateTableData();
   // }
 
-  private updateTableData(): void {
-    let filterData = new HttpParams();
-    this.eventsValuesControls?.value?.forEach((item) => {
-      filterData = filterData.append('eventType', item);
-    });
-
-    this.appService
-      .getFilteredEventData(filterData)
-      .pipe(
-        tap((filteredData: TalonEvent[]) => {
-          this.store.dispatch(allEventsHasBeenLoaded({ events: filteredData }));
-        })
-      )
-      .subscribe();
-
-    this.resetPaginator();
-  }
+  // private updateTableData(): void {
+  //   let filterData = new HttpParams();
+  //   this.eventsValuesControls?.value?.forEach((item) => {
+  //     filterData = filterData.append('eventType', item);
+  //   });
+  //
+  //   this.appService
+  //     .getFilteredEventData(filterData)
+  //     .pipe(
+  //       tap((filteredData: TalonEvent[]) => {
+  //         this.store.dispatch(allEventsHasBeenLoaded({ events: filteredData }));
+  //       })
+  //     )
+  //     .subscribe();
+  //
+  //   this.resetPaginator();
+  // }
 
   private resetPaginator(): void {
     if (this.dataSource.paginator) {

@@ -4,30 +4,24 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { filter, finalize, first, Observable, tap } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import { loadAllEvents } from './events.actions';
-import { selectAreEventsLoaded } from './events.selector';
+import { filter, first, Observable, tap } from 'rxjs';
+import { EventsEntityService } from './events-entity.service';
 
 @Injectable({ providedIn: 'root' })
 export class EventsResolver implements Resolve<boolean> {
-  isLoading = false;
-  constructor(private store: Store) {}
+  constructor(private eventsEntityService: EventsEntityService) {}
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.store.pipe(
-      select(selectAreEventsLoaded),
-      tap((areEventsLoaded) => {
-        if (!this.isLoading && !areEventsLoaded) {
-          this.isLoading = true;
-          this.store.dispatch(loadAllEvents());
+    return this.eventsEntityService.loaded$.pipe(
+      tap((loaded) => {
+        if (!loaded) {
+          this.eventsEntityService.getAll();
         }
       }),
-      first(),
-      filter((areEventsLoaded) => areEventsLoaded),
-      finalize(() => (this.isLoading = false))
+      filter((loaded) => !!loaded),
+      first()
     );
   }
 }
